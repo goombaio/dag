@@ -17,20 +17,66 @@
 
 package dag
 
-import "github.com/google/uuid"
+import (
+	"fmt"
+	"sync"
+
+	"github.com/google/uuid"
+)
 
 // DAG ...
 type DAG struct {
-	ID       uuid.UUID
-	Vertices map[string]*Vertex
+	ID uuid.UUID
+
+	mu       sync.Mutex
+	Vertices map[uuid.UUID]*Vertex
 }
 
 // NewDAG ...
 func NewDAG() *DAG {
 	d := &DAG{
-		ID:       uuid.New(),
-		Vertices: make(map[string]*Vertex, 0),
+		ID: uuid.New(),
+
+		Vertices: make(map[uuid.UUID]*Vertex, 0),
 	}
 
 	return d
+}
+
+// AddVertex ...
+func (d *DAG) AddVertex(v *Vertex) error {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+
+	d.Vertices[v.ID] = v
+
+	return nil
+}
+
+// AddEdge ...
+func (d *DAG) AddEdge(fromVertexID uuid.UUID, toVertexID uuid.UUID) error {
+	var fromVertex *Vertex
+	var toVertex *Vertex
+	var ok bool
+
+	d.mu.Lock()
+	if fromVertex, ok = d.Vertices[fromVertexID]; !ok {
+		return fmt.Errorf("Vertex with the id %v not found", fromVertex.ID)
+	}
+	d.mu.Unlock()
+
+	d.mu.Lock()
+	if toVertex, ok = d.Vertices[toVertexID]; !ok {
+		return fmt.Errorf("vertex with the id %v not found", toVertex.ID)
+	}
+	d.mu.Unlock()
+
+	for _, childVertex := range fromVertex.Children {
+		if childVertex == toVertex {
+			return fmt.Errorf("edge (%v,%v) already exists", fromVertexID, toVertexID)
+		}
+	}
+	fromVertex.Children = append(fromVertex.Children, toVertex)
+
+	return nil
 }

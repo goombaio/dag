@@ -29,6 +29,21 @@ func TestDAGInstance(t *testing.T) {
 	d := dag.NewDAG()
 
 	if d.ID == uuid.Nil {
-		t.Fatalf("Workflow ID expected to be not nil.\n")
+		t.Fatalf("DAG ID expected to be not nil.\n")
+	}
+
+	if len(d.Vertices) != 0 {
+		t.Fatalf("DAG number of vertices expected to be 0 but got %d", len(d.Vertices))
+	}
+}
+
+func TestAddVertex(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex()
+	dag1.AddVertex(vertex1)
+
+	if len(dag1.Vertices) != 1 {
+		t.Fatalf("DAG number of vertices expected to be 1 but got %d", len(dag1.Vertices))
 	}
 }
