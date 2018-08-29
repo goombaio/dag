@@ -15,22 +15,19 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-package dag
+package dag_test
 
-import "github.com/google/uuid"
+import (
+	"testing"
 
-// DAG ...
-type DAG struct {
-	ID       uuid.UUID
-	Vertices map[string]*Vertex
-}
+	"github.com/google/uuid"
+	"github.com/goombaio/dag"
+)
 
-// NewDAG ...
-func NewDAG() *DAG {
-	d := &DAG{
-		ID:       uuid.New(),
-		Vertices: make(map[string]*Vertex, 0),
+func TestVertexInstance(t *testing.T) {
+	v := dag.NewVertex()
+
+	if v.ID == uuid.Nil {
+		t.Fatalf("Vertex ID expected to be not nil.\n")
 	}
-
-	return d
 }
