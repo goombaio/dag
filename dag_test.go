@@ -41,9 +41,56 @@ func TestAddVertex(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex()
-	dag1.AddVertex(vertex1)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
 
 	if len(dag1.Vertices) != 1 {
 		t.Fatalf("DAG number of vertices expected to be 1 but got %d", len(dag1.Vertices))
+	}
+}
+
+func TestAddEdge(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex()
+	vertex2 := dag.NewVertex()
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG")
+	}
+}
+
+func TestAddEdgeFails(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex()
+	vertex2 := dag.NewVertex()
+	vertex3 := dag.NewVertex()
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+
+	err = dag1.AddEdge(vertex3, vertex2)
+	if err == nil {
+		t.Fatalf("AddEdge should fail butit doesn't")
 	}
 }

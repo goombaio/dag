@@ -54,26 +54,43 @@ func (d *DAG) AddVertex(v *Vertex) error {
 }
 
 // AddEdge ...
-func (d *DAG) AddEdge(fromVertexID uuid.UUID, toVertexID uuid.UUID) error {
-	var fromVertex *Vertex
-	var toVertex *Vertex
+func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 	var ok bool
 
 	d.mu.Lock()
-	if fromVertex, ok = d.Vertices[fromVertexID]; !ok {
+	fromExists := false
+	toExists := false
+	for _, vertex := range d.Vertices {
+		if vertex == fromVertex {
+			fromExists = true
+		}
+		if vertex == toVertex {
+			toExists = true
+		}
+	}
+	if fromExists == false {
+		return fmt.Errorf("Vertex with the id %v not found", fromVertex.ID)
+	}
+	if toExists == false {
+		return fmt.Errorf("Vertex with the id %v not found", toVertex.ID)
+	}
+	d.mu.Unlock()
+
+	d.mu.Lock()
+	if fromVertex, ok = d.Vertices[fromVertex.ID]; !ok {
 		return fmt.Errorf("Vertex with the id %v not found", fromVertex.ID)
 	}
 	d.mu.Unlock()
 
 	d.mu.Lock()
-	if toVertex, ok = d.Vertices[toVertexID]; !ok {
+	if toVertex, ok = d.Vertices[toVertex.ID]; !ok {
 		return fmt.Errorf("vertex with the id %v not found", toVertex.ID)
 	}
 	d.mu.Unlock()
 
 	for _, childVertex := range fromVertex.Children {
 		if childVertex == toVertex {
-			return fmt.Errorf("edge (%v,%v) already exists", fromVertexID, toVertexID)
+			return fmt.Errorf("edge (%v,%v) already exists", fromVertex.ID, toVertex.ID)
 		}
 	}
 	fromVertex.Children = append(fromVertex.Children, toVertex)
