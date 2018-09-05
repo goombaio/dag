@@ -73,7 +73,7 @@ func TestAddEdge(t *testing.T) {
 	}
 }
 
-func TestAddEdgeFails(t *testing.T) {
+func TestAddEdgeFailsVertextDontExist(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex()
@@ -91,11 +91,37 @@ func TestAddEdgeFails(t *testing.T) {
 
 	err = dag1.AddEdge(vertex3, vertex2)
 	if err == nil {
-		t.Fatalf("AddEdge should fail butit doesn't")
+		t.Fatalf("AVertex don't exist, AddEdge should fail but it doesn't")
 	}
 
 	err = dag1.AddEdge(vertex2, vertex3)
 	if err == nil {
-		t.Fatalf("AddEdge should fail butit doesn't")
+		t.Fatalf("Vertex don't exist, AddEdge should fail but it doesn't")
+	}
+}
+
+func TestAddEdgeFailsAlreadyExists(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex()
+	vertex2 := dag.NewVertex()
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG")
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err == nil {
+		t.Fatalf("Edge already exists, AddEdge should fail but it doesn't")
 	}
 }
