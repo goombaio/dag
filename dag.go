@@ -55,11 +55,13 @@ func (d *DAG) AddVertex(v *Vertex) error {
 
 // AddEdge ...
 func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
-	var ok bool
-
-	d.mu.Lock()
 	fromExists := false
 	toExists := false
+
+	d.mu.Lock()
+	defer d.mu.Unlock()
+
+	// Check if vertexs exists
 	for _, vertex := range d.Vertices {
 		if vertex == fromVertex {
 			fromExists = true
@@ -74,25 +76,15 @@ func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 	if toExists == false {
 		return fmt.Errorf("Vertex with the id %v not found", toVertex.ID)
 	}
-	d.mu.Unlock()
 
-	d.mu.Lock()
-	if fromVertex, ok = d.Vertices[fromVertex.ID]; !ok {
-		return fmt.Errorf("Vertex with the id %v not found", fromVertex.ID)
-	}
-	d.mu.Unlock()
-
-	d.mu.Lock()
-	if toVertex, ok = d.Vertices[toVertex.ID]; !ok {
-		return fmt.Errorf("vertex with the id %v not found", toVertex.ID)
-	}
-	d.mu.Unlock()
-
+	// Check if edge already exists
 	for _, childVertex := range fromVertex.Children {
 		if childVertex == toVertex {
-			return fmt.Errorf("edge (%v,%v) already exists", fromVertex.ID, toVertex.ID)
+			return fmt.Errorf("Edge (%v,%v) already exists", fromVertex.ID, toVertex.ID)
 		}
 	}
+
+	// Add edge
 	fromVertex.Children = append(fromVertex.Children, toVertex)
 
 	return nil

@@ -93,4 +93,9 @@ func TestAddEdgeFails(t *testing.T) {
 	if err == nil {
 		t.Fatalf("AddEdge should fail butit doesn't")
 	}
+
+	err = dag1.AddEdge(vertex2, vertex3)
+	if err == nil {
+		t.Fatalf("AddEdge should fail butit doesn't")
+	}
 }
