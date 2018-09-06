@@ -10,6 +10,7 @@ A DAG, Directed acyclic graph implementation in golang.
 [![Coverage Report][Coverage-Image]](Coverage-URL)
 [![Go Report Card][GoReportCard-Image]](GoReportCard-URL)
 [![CII Best Practices][CII-Image]](CII-URL)
+[![GoDoc][GoDoc-Image]](GoDoc-URL)
 
 ## Install
 
@@ -78,3 +79,5 @@ limitations under the License.
 [GoReportCard-URL]: https://goreportcard.com/report/github.com/goombaio/dag
 [CII-Image]: https://bestpractices.coreinfrastructure.org/projects/2177/badge
 [CII-URL]: https://bestpractices.coreinfrastructure.org/projects/2177
+[GoDoc-Image]: https://godoc.org/github.com/goombaio/dag?status.svg
+[GoDoc-URL]: http://godoc.org/github.com/goombaio/dag
