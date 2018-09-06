@@ -119,3 +119,30 @@ func TestAddEdgeFailsAlreadyExists(t *testing.T) {
 		t.Fatalf("Edge already exists, AddEdge should fail but it doesn't")
 	}
 }
+
+func TestGraphOrder(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex(nil)
+	vertex2 := dag.NewVertex(nil)
+	vertex3 := dag.NewVertex(nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+	err = dag1.AddVertex(vertex3)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+
+	expected_order := 3
+	order := dag1.Order()
+	if order != expected_order {
+		t.Fatalf("Expected order to be %d but got %d", expected_order, order)
+	}
+}
