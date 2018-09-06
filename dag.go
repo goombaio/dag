@@ -53,8 +53,20 @@ func (d *DAG) AddVertex(v *Vertex) error {
 // DeleteVertex deletes a verrtex and all the edges referencing it from the
 // graph.
 func (d *DAG) DeleteVertex(vertex *Vertex) error {
+	existsVertex := false
+
 	d.mu.Lock()
 	defer d.mu.Unlock()
+
+	// Check if vertexs exists
+	for _, v := range d.Vertices {
+		if v == vertex {
+			existsVertex = true
+		}
+	}
+	if existsVertex == false {
+		return fmt.Errorf("Vertex with ID %v not found", vertex.ID)
+	}
 
 	delete(d.Vertices, vertex.ID)
 

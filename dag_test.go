@@ -68,6 +68,11 @@ func TestDeleteVertex(t *testing.T) {
 	if len(dag1.Vertices) != 0 {
 		t.Fatalf("DAG number of vertices expected to be 0 but got %d", len(dag1.Vertices))
 	}
+
+	err = dag1.DeleteVertex(vertex1)
+	if err == nil {
+		t.Fatalf("Vertex don't exist, AddEdge should fail but it doesn't: %s", err)
+	}
 }
 
 func TestAddEdge(t *testing.T) {
