@@ -24,13 +24,14 @@ import (
 	"github.com/google/uuid"
 )
 
-// DAG ...
+// DAG type implements a Directed acyclic graph data structure.
+// https://en.wikipedia.org/wiki/Directed_acyclic_graph.
 type DAG struct {
 	mu       sync.Mutex
 	Vertices map[uuid.UUID]*Vertex
 }
 
-// NewDAG ...
+// NewDAG creates a new directed acyclic graph instance.
 func NewDAG() *DAG {
 	d := &DAG{
 		Vertices: make(map[uuid.UUID]*Vertex, 0),
@@ -39,7 +40,7 @@ func NewDAG() *DAG {
 	return d
 }
 
-// AddVertex adds a vertex to this graph.
+// AddVertex adds a vertex to the graph.
 func (d *DAG) AddVertex(v *Vertex) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
@@ -49,7 +50,30 @@ func (d *DAG) AddVertex(v *Vertex) error {
 	return nil
 }
 
-// AddEdge adds a directed edge between two existing vertices to this graph.
+// DeleteVertex deletes a verrtex and all the edges referencing it from the
+// graph.
+func (d *DAG) DeleteVertex(vertex *Vertex) error {
+	existsVertex := false
+
+	d.mu.Lock()
+	defer d.mu.Unlock()
+
+	// Check if vertexs exists.
+	for _, v := range d.Vertices {
+		if v == vertex {
+			existsVertex = true
+		}
+	}
+	if existsVertex == false {
+		return fmt.Errorf("Vertex with ID %v not found", vertex.ID)
+	}
+
+	delete(d.Vertices, vertex.ID)
+
+	return nil
+}
+
+// AddEdge adds a directed edge between two existing vertices to the graph.
 func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 	fromExists := false
 	toExists := false
@@ -57,7 +81,7 @@ func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 
-	// Check if vertexs exists
+	// Check if vertexs exists.
 	for _, vertex := range d.Vertices {
 		if vertex == fromVertex {
 			fromExists = true
@@ -67,33 +91,33 @@ func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 		}
 	}
 	if fromExists == false {
-		return fmt.Errorf("Vertex with the id %v not found", fromVertex.ID)
+		return fmt.Errorf("Vertex with ID %v not found", fromVertex.ID)
 	}
 	if toExists == false {
-		return fmt.Errorf("Vertex with the id %v not found", toVertex.ID)
+		return fmt.Errorf("Vertex with ID %v not found", toVertex.ID)
 	}
 
-	// Check if edge already exists
+	// Check if edge already exists.
 	for _, childVertex := range fromVertex.Children {
 		if childVertex == toVertex {
 			return fmt.Errorf("Edge (%v,%v) already exists", fromVertex.ID, toVertex.ID)
 		}
 	}
 
-	// Add edge
+	// Add edge.
 	fromVertex.Children = append(fromVertex.Children, toVertex)
 
 	return nil
 }
 
-// Order return the number of vertices in this graph.
+// Order return the number of vertices in the graph.
 func (d *DAG) Order() int {
 	numVertices := len(d.Vertices)
 
 	return numVertices
 }
 
-// Size return the number of edges in this graph.
+// Size return the number of edges in the graph.
 func (d *DAG) Size() int {
 	numEdges := 0
 	for _, vertex := range d.Vertices {
