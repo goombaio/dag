@@ -11,6 +11,45 @@ A DAG, Directed acyclic graph implementation in golang.
 [![Go Report Card][GoReportCard-Image]](GoReportCard-URL)
 [![CII Best Practices][CII-Image]](CII-URL)
 
+## Install
+
+```bash
+go get github.com/goombaio/dag
+```
+
+You can also update an already installed version:
+
+```bash
+go get -u github.com/goombaio/dag
+```
+
+## Example of use
+
+```go
+// Create the dag.s
+dag1 := dag.NewDAG()
+
+// Create the vertices.
+vertex1 := dag.NewVertex()
+vertex2 := dag.NewVertex()
+vertex3 := dag.NewVertex()
+vertex4 := dag.NewVertex()
+
+// Add the vertices to the dag.
+dag1.AddVertex(vertex1)
+dag1.AddVertex(vertex2)
+dag1.AddVertex(vertex3)
+dag1.AddVertex(vertex4)
+
+// Add the edges (Note that given vertices must exist before adding an
+// edge between them).
+dag1.AddEdge(vertex1, vertex2)
+dag1.AddEdge(vertex2, vertex3)
+dag1.AddEdge(vertex2, vertex4)
+dag1.AddEdge(vertex4, vertex3)
+```
+
+
 ## License
 
 Copyright (c) 2018 Goomba project Authors.
