@@ -39,7 +39,7 @@ func NewDAG() *DAG {
 	return d
 }
 
-// AddVertex ...
+// AddVertex adds a vertex to this graph.
 func (d *DAG) AddVertex(v *Vertex) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
@@ -49,7 +49,7 @@ func (d *DAG) AddVertex(v *Vertex) error {
 	return nil
 }
 
-// AddEdge ...
+// AddEdge adds a directed edge between two existing vertices to this graph.
 func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 	fromExists := false
 	toExists := false
@@ -84,4 +84,21 @@ func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 	fromVertex.Children = append(fromVertex.Children, toVertex)
 
 	return nil
+}
+
+// Order return the number of vertices in this graph.
+func (d *DAG) Order() int {
+	numVertices := len(d.Vertices)
+
+	return numVertices
+}
+
+// Size return the number of edges in this graph.
+func (d *DAG) Size() int {
+	numEdges := 0
+	for _, vertex := range d.Vertices {
+		numEdges = numEdges + len(vertex.Children)
+	}
+
+	return numEdges
 }
