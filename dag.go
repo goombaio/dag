@@ -139,3 +139,16 @@ func (d *DAG) Size() int {
 
 	return numEdges
 }
+
+// SinkVertices return vertices with no children defined by the graph edges.
+func (d *DAG) SinkVertices() []*Vertex {
+	var sinkVertices []*Vertex
+
+	for _, vertex := range d.Vertices {
+		if len(vertex.Children) == 0 {
+			sinkVertices = append(sinkVertices, vertex)
+		}
+	}
+
+	return sinkVertices
+}

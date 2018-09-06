@@ -276,3 +276,29 @@ func TestGraphSize(t *testing.T) {
 		t.Fatalf("Expected size to be %d but got %d", expected_size, size)
 	}
 }
+
+func TestSinkVertices(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex(nil)
+	vertex2 := dag.NewVertex(nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG: %s", err)
+	}
+
+	sinkVertices := dag1.SinkVertices()
+	if len(sinkVertices) != 1 {
+		t.Fatalf("Expected to have 1 Sink vertex but got %d", len(sinkVertices))
+	}
+}
