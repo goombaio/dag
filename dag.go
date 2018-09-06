@@ -139,3 +139,10 @@ func (d *DAG) Size() int {
 
 	return numEdges
 }
+
+// SourceVertices return the vertices with zero in-degree of the graph.
+func (d *DAG) SourceVertices() []*Vertex {
+	var sources []*Vertex
+
+	return sources
+}
