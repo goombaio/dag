@@ -120,6 +120,42 @@ func TestAddEdgeFailsAlreadyExists(t *testing.T) {
 	}
 }
 
+func TestDeleteEdge(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex(nil)
+	vertex2 := dag.NewVertex(nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG")
+	}
+
+	size := dag1.Size()
+	if size != 1 {
+		t.Fatalf("Dag expected to have 1 edge but got %d", size)
+	}
+
+	err = dag1.DeleteEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't delete edge from DAG")
+	}
+
+	size = dag1.Size()
+	if size != 0 {
+		t.Fatalf("Dag expected to have 0 edges but got %d", size)
+	}
+}
+
 func TestGraphOrder(t *testing.T) {
 	dag1 := dag.NewDAG()
 

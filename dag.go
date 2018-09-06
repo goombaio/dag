@@ -86,6 +86,19 @@ func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 	return nil
 }
 
+// DeleteEdge deletes a directed edge between two existing vertices from the
+// graph.
+func (d *DAG) DeleteEdge(fromVertex *Vertex, toVertex *Vertex) error {
+	for i, childVertex := range fromVertex.Children {
+		if childVertex == toVertex {
+			fromVertex.Children[i] = fromVertex.Children[len(fromVertex.Children)-1]
+			fromVertex.Children = fromVertex.Children[:len(fromVertex.Children)-1]
+		}
+	}
+
+	return nil
+}
+
 // Order return the number of vertices in this graph.
 func (d *DAG) Order() int {
 	numVertices := len(d.Vertices)
