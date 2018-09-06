@@ -26,7 +26,7 @@ import (
 )
 
 func TestVertexInstance(t *testing.T) {
-	v := dag.NewVertex()
+	v := dag.NewVertex(nil)
 
 	if v.ID == uuid.Nil {
 		t.Fatalf("Vertex ID expected to be not nil.\n")

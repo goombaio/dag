@@ -28,7 +28,7 @@ type Vertex struct {
 }
 
 // NewVertex ...
-func NewVertex() *Vertex {
+func NewVertex(value interface{}) *Vertex {
 	v := &Vertex{
 		ID:       uuid.New(),
 		Children: make([]*Vertex, 0),

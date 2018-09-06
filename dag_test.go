@@ -34,7 +34,7 @@ func TestDAGInstance(t *testing.T) {
 func TestAddVertex(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex()
+	vertex1 := dag.NewVertex(nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -49,8 +49,8 @@ func TestAddVertex(t *testing.T) {
 func TestAddEdge(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex()
-	vertex2 := dag.NewVertex()
+	vertex1 := dag.NewVertex(nil)
+	vertex2 := dag.NewVertex(nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -70,9 +70,9 @@ func TestAddEdge(t *testing.T) {
 func TestAddEdgeFailsVertextDontExist(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex()
-	vertex2 := dag.NewVertex()
-	vertex3 := dag.NewVertex()
+	vertex1 := dag.NewVertex(nil)
+	vertex2 := dag.NewVertex(nil)
+	vertex3 := dag.NewVertex(nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -97,8 +97,8 @@ func TestAddEdgeFailsVertextDontExist(t *testing.T) {
 func TestAddEdgeFailsAlreadyExists(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex()
-	vertex2 := dag.NewVertex()
+	vertex1 := dag.NewVertex(nil)
+	vertex2 := dag.NewVertex(nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
