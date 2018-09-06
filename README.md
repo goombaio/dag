@@ -5,12 +5,12 @@ A DAG, Directed acyclic graph implementation in golang.
 ## Badges
 
 [![License][License-Image]][License-URL]
-[![FOSSA Status][FOSSA-Image]](FOSSA-URL)
-[![CircleCI Status][CircleCI-Image]](CircleCI-URL)
-[![Coverage Report][Coverage-Image]](Coverage-URL)
-[![Go Report Card][GoReportCard-Image]](GoReportCard-URL)
-[![CII Best Practices][CII-Image]](CII-URL)
-[![GoDoc][GoDoc-Image]](GoDoc-URL)
+[![FOSSA Status][FOSSA-Image]][FOSSA-URL]
+[![CircleCI Status][CircleCI-Image]][CircleCI-URL]
+[![Coverage Report][Coverage-Image]][Coverage-URL]
+[![Go Report Card][GoReportCard-Image]][GoReportCard-URL]
+[![CII Best Practices][CII-Image]][CII-URL]
+[![GoDoc][GoDoc-Image]][GoDoc-URL]
 
 ## Install
 
