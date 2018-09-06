@@ -25,7 +25,7 @@ import (
 )
 
 // DAG type implements a Directed acyclic graph data structure.
-// https://en.wikipedia.org/wiki/Directed_acyclic_graph
+// https://en.wikipedia.org/wiki/Directed_acyclic_graph.
 type DAG struct {
 	mu       sync.Mutex
 	Vertices map[uuid.UUID]*Vertex
@@ -58,7 +58,7 @@ func (d *DAG) DeleteVertex(vertex *Vertex) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 
-	// Check if vertexs exists
+	// Check if vertexs exists.
 	for _, v := range d.Vertices {
 		if v == vertex {
 			existsVertex = true
@@ -81,7 +81,7 @@ func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 
-	// Check if vertexs exists
+	// Check if vertexs exists.
 	for _, vertex := range d.Vertices {
 		if vertex == fromVertex {
 			fromExists = true
@@ -97,14 +97,14 @@ func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 		return fmt.Errorf("Vertex with ID %v not found", toVertex.ID)
 	}
 
-	// Check if edge already exists
+	// Check if edge already exists.
 	for _, childVertex := range fromVertex.Children {
 		if childVertex == toVertex {
 			return fmt.Errorf("Edge (%v,%v) already exists", fromVertex.ID, toVertex.ID)
 		}
 	}
 
-	// Add edge
+	// Add edge.
 	fromVertex.Children = append(fromVertex.Children, toVertex)
 
 	return nil
