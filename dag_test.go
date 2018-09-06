@@ -34,7 +34,7 @@ func TestDAGInstance(t *testing.T) {
 func TestAddVertex(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -49,7 +49,7 @@ func TestAddVertex(t *testing.T) {
 func TestDeleteVertex(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -78,8 +78,8 @@ func TestDeleteVertex(t *testing.T) {
 func TestAddEdge(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex(nil)
-	vertex2 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -99,9 +99,9 @@ func TestAddEdge(t *testing.T) {
 func TestAddEdgeFailsVertextDontExist(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex(nil)
-	vertex2 := dag.NewVertex(nil)
-	vertex3 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+	vertex3 := dag.NewVertex("3", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -126,8 +126,8 @@ func TestAddEdgeFailsVertextDontExist(t *testing.T) {
 func TestAddEdgeFailsAlreadyExists(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex(nil)
-	vertex2 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -152,8 +152,8 @@ func TestAddEdgeFailsAlreadyExists(t *testing.T) {
 func TestDeleteEdge(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex(nil)
-	vertex2 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -194,9 +194,9 @@ func TestGraphOrder(t *testing.T) {
 		t.Fatalf("Expected order to be %d but got %d", expected_order, order)
 	}
 
-	vertex1 := dag.NewVertex(nil)
-	vertex2 := dag.NewVertex(nil)
-	vertex3 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+	vertex3 := dag.NewVertex("3", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -227,10 +227,10 @@ func TestGraphSize(t *testing.T) {
 		t.Fatalf("Expected size to be %d but got %d", expected_size, size)
 	}
 
-	vertex1 := dag.NewVertex(nil)
-	vertex2 := dag.NewVertex(nil)
-	vertex3 := dag.NewVertex(nil)
-	vertex4 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+	vertex3 := dag.NewVertex("3", nil)
+	vertex4 := dag.NewVertex("4", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -280,8 +280,8 @@ func TestGraphSize(t *testing.T) {
 func TestSinkVertices(t *testing.T) {
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex(nil)
-	vertex2 := dag.NewVertex(nil)
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {

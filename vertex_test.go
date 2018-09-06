@@ -20,15 +20,13 @@ package dag_test
 import (
 	"testing"
 
-	"github.com/google/uuid"
-
 	"github.com/goombaio/dag"
 )
 
 func TestVertexInstance(t *testing.T) {
-	v := dag.NewVertex(nil)
+	v := dag.NewVertex("1", nil)
 
-	if v.ID == uuid.Nil {
-		t.Fatalf("Vertex ID expected to be not nil.\n")
+	if v.ID == "" {
+		t.Fatalf("Vertex ID expected to be not empty string.\n")
 	}
 }

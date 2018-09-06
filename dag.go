@@ -20,21 +20,19 @@ package dag
 import (
 	"fmt"
 	"sync"
-
-	"github.com/google/uuid"
 )
 
 // DAG type implements a Directed acyclic graph data structure.
 // https://en.wikipedia.org/wiki/Directed_acyclic_graph.
 type DAG struct {
 	mu       sync.Mutex
-	Vertices map[uuid.UUID]*Vertex
+	Vertices map[string]*Vertex
 }
 
 // NewDAG creates a new directed acyclic graph instance.
 func NewDAG() *DAG {
 	d := &DAG{
-		Vertices: make(map[uuid.UUID]*Vertex, 0),
+		Vertices: make(map[string]*Vertex, 0),
 	}
 
 	return d
@@ -76,7 +74,7 @@ func (d *DAG) DeleteVertex(vertex *Vertex) error {
 // AddEdge adds a directed edge between two existing vertices to the graph.
 func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
 	tailExists := false
-	toExists := false
+	headExists := false
 
 	d.mu.Lock()
 	defer d.mu.Unlock()
@@ -87,13 +85,13 @@ func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
 			tailExists = true
 		}
 		if vertex == headVertex {
-			toExists = true
+			headExists = true
 		}
 	}
 	if tailExists == false {
 		return fmt.Errorf("Vertex with ID %v not found", tailVertex.ID)
 	}
-	if toExists == false {
+	if headExists == false {
 		return fmt.Errorf("Vertex with ID %v not found", headVertex.ID)
 	}
 
@@ -106,6 +104,7 @@ func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
 
 	// Add edge.
 	tailVertex.Children = append(tailVertex.Children, headVertex)
+	headVertex.Parents = append(headVertex.Parents, tailVertex)
 
 	return nil
 }
@@ -151,4 +150,19 @@ func (d *DAG) SinkVertices() []*Vertex {
 	}
 
 	return sinkVertices
+}
+
+// String implements stringer interface and prints ab strubg representation
+// of this instance.
+func (d *DAG) String() string {
+	var result string
+	result = fmt.Sprintf("DAG Vertices: %d - Edges: %d\n", d.Order(), d.Size())
+	result = result + fmt.Sprintf("Vertexs:\n")
+	for _, vertex := range d.Vertices {
+		result = result + fmt.Sprintf("  ID: %s - Parents: %d - Children: %d\n", vertex.ID, len(vertex.Parents), len(vertex.Children))
+		result = result + fmt.Sprintf("    Parents: %s\n", vertex.ParentsIDs())
+		result = result + fmt.Sprintf("    Children: %s\n", vertex.ChidrenIDs())
+	}
+
+	return result
 }

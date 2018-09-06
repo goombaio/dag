@@ -17,22 +17,40 @@
 
 package dag
 
-import (
-	"github.com/google/uuid"
-)
-
 // Vertex ...
 type Vertex struct {
-	ID       uuid.UUID
+	ID       string
+	Parents  []*Vertex
 	Children []*Vertex
 }
 
 // NewVertex ...
-func NewVertex(value interface{}) *Vertex {
+func NewVertex(id string, value interface{}) *Vertex {
 	v := &Vertex{
-		ID:       uuid.New(),
+		ID:       id,
+		Parents:  make([]*Vertex, 0),
 		Children: make([]*Vertex, 0),
 	}
 
 	return v
+}
+
+// ParentsIDs ...
+func (v *Vertex) ParentsIDs() []string {
+	var ids []string
+	for _, vertex := range v.Parents {
+		ids = append(ids, vertex.ID)
+	}
+
+	return ids
+}
+
+// ChidrenIDs ...
+func (v *Vertex) ChidrenIDs() []string {
+	var ids []string
+	for _, vertex := range v.Children {
+		ids = append(ids, vertex.ID)
+	}
+
+	return ids
 }
