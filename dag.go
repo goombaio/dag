@@ -74,8 +74,8 @@ func (d *DAG) DeleteVertex(vertex *Vertex) error {
 }
 
 // AddEdge adds a directed edge between two existing vertices to the graph.
-func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
-	fromExists := false
+func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
+	tailExists := false
 	toExists := false
 
 	d.mu.Lock()
@@ -83,40 +83,40 @@ func (d *DAG) AddEdge(fromVertex *Vertex, toVertex *Vertex) error {
 
 	// Check if vertexs exists.
 	for _, vertex := range d.Vertices {
-		if vertex == fromVertex {
-			fromExists = true
+		if vertex == tailVertex {
+			tailExists = true
 		}
-		if vertex == toVertex {
+		if vertex == headVertex {
 			toExists = true
 		}
 	}
-	if fromExists == false {
-		return fmt.Errorf("Vertex with ID %v not found", fromVertex.ID)
+	if tailExists == false {
+		return fmt.Errorf("Vertex with ID %v not found", tailVertex.ID)
 	}
 	if toExists == false {
-		return fmt.Errorf("Vertex with ID %v not found", toVertex.ID)
+		return fmt.Errorf("Vertex with ID %v not found", headVertex.ID)
 	}
 
 	// Check if edge already exists.
-	for _, childVertex := range fromVertex.Children {
-		if childVertex == toVertex {
-			return fmt.Errorf("Edge (%v,%v) already exists", fromVertex.ID, toVertex.ID)
+	for _, childVertex := range tailVertex.Children {
+		if childVertex == headVertex {
+			return fmt.Errorf("Edge (%v,%v) already exists", tailVertex.ID, headVertex.ID)
 		}
 	}
 
 	// Add edge.
-	fromVertex.Children = append(fromVertex.Children, toVertex)
+	tailVertex.Children = append(tailVertex.Children, headVertex)
 
 	return nil
 }
 
 // DeleteEdge deletes a directed edge between two existing vertices from the
 // graph.
-func (d *DAG) DeleteEdge(fromVertex *Vertex, toVertex *Vertex) error {
-	for i, childVertex := range fromVertex.Children {
-		if childVertex == toVertex {
-			fromVertex.Children[i] = fromVertex.Children[len(fromVertex.Children)-1]
-			fromVertex.Children = fromVertex.Children[:len(fromVertex.Children)-1]
+func (d *DAG) DeleteEdge(tailVertex *Vertex, headVertex *Vertex) error {
+	for i, childVertex := range tailVertex.Children {
+		if childVertex == headVertex {
+			tailVertex.Children[i] = tailVertex.Children[len(tailVertex.Children)-1]
+			tailVertex.Children = tailVertex.Children[:len(tailVertex.Children)-1]
 		}
 	}
 
