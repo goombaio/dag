@@ -85,7 +85,7 @@ func TestAddEdgeFailsVertextDontExist(t *testing.T) {
 
 	err = dag1.AddEdge(vertex3, vertex2)
 	if err == nil {
-		t.Fatalf("AVertex don't exist, AddEdge should fail but it doesn't")
+		t.Fatalf("Vertex don't exist, AddEdge should fail but it doesn't")
 	}
 
 	err = dag1.AddEdge(vertex2, vertex3)
@@ -165,6 +165,7 @@ func TestGraphSize(t *testing.T) {
 	vertex1 := dag.NewVertex(nil)
 	vertex2 := dag.NewVertex(nil)
 	vertex3 := dag.NewVertex(nil)
+	vertex4 := dag.NewVertex(nil)
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
@@ -178,8 +179,33 @@ func TestGraphSize(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Can't add vertex to DAG")
 	}
+	err = dag1.AddVertex(vertex4)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG")
+	}
 
 	expected_size = 0
+	size = dag1.Size()
+	if size != expected_size {
+		t.Fatalf("Expected size to be %d but got %d", expected_size, size)
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG")
+	}
+
+	err = dag1.AddEdge(vertex2, vertex3)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG")
+	}
+
+	err = dag1.AddEdge(vertex2, vertex4)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG")
+	}
+
+	expected_size = 3
 	size = dag1.Size()
 	if size != expected_size {
 		t.Fatalf("Expected size to be %d but got %d", expected_size, size)
