@@ -30,11 +30,11 @@ go get -u github.com/goombaio/dag
 // Create the dag
 dag1 := dag.NewDAG()
 
-// Create the vertices.
-vertex1 := dag.NewVertex()
-vertex2 := dag.NewVertex()
-vertex3 := dag.NewVertex()
-vertex4 := dag.NewVertex()
+// Create the vertices. Value is nil to simplify.
+vertex1 := dag.NewVertex(nil)
+vertex2 := dag.NewVertex(nil)
+vertex3 := dag.NewVertex(nil)
+vertex4 := dag.NewVertex(nil)
 
 // Add the vertices to the dag.
 dag1.AddVertex(vertex1)
