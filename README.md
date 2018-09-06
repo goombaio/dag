@@ -4,10 +4,12 @@ A DAG, Directed acyclic graph implementation in golang.
 
 ## Badges
 
-[![License][License-Image]][License-Url]
-[![CircleCI](https://circleci.com/gh/goombaio/dag.svg?style=svg)](https://circleci.com/gh/goombaio/dag)
-[![codecov](https://codecov.io/gh/goombaio/dag/branch/master/graph/badge.svg)](https://codecov.io/gh/goombaio/dag)
-[![Go Report Card](https://goreportcard.com/badge/github.com/goombaio/dag)](https://goreportcard.com/report/github.com/goombaio/dag)
+[![License][License-Image]][License-URL]
+[![FOSSA Status][FOSSA-Image]](FOSSA-URL)
+[![CircleCI Status][CircleCI-Image]](CircleCI-URL)
+[![Coverage Report][Coverage-Image]](Coverage-URL)
+[![Go Report Card][GoReportCard-Image]](GoReportCard-URL)
+[![CII Best Practices][CII-Image]](CII-URL)
 
 ## License
 
@@ -25,5 +27,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-[License-Url]: http://opensource.org/licenses/Apache
 [License-Image]: https://img.shields.io/badge/License-Apache-blue.svg
+[License-URL]: http://opensource.org/licenses/Apache
+[FOSSA-Image]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fgoombaio%2Fdag.svg?type=shield
+[FOSSA-URL]: https://app.fossa.io/projects/git%2Bgithub.com%2Fgoombaio%2Fdag?ref=badge_shield
+[CircleCI-Image]: https://circleci.com/gh/goombaio/dag.svg?style=svg
+[CircleCI-URL]: https://circleci.com/gh/goombaio/dag
+[Coverage-Image]: https://codecov.io/gh/goombaio/dag/branch/master/graph/badge.svg
+[Coverage-URL]: https://codecov.io/gh/goombaio/dag
+[GoReportCard-Image]: https://goreportcard.com/badge/github.com/goombaio/dag
+[GoReportCard-URL]: https://goreportcard.com/report/github.com/goombaio/dag
+[CII-Image]: https://bestpractices.coreinfrastructure.org/projects/2177/badge
+[CII-URL]: https://bestpractices.coreinfrastructure.org/projects/2177
