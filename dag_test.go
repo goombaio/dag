@@ -20,17 +20,11 @@ package dag_test
 import (
 	"testing"
 
-	"github.com/google/uuid"
-
 	"github.com/goombaio/dag"
 )
 
 func TestDAGInstance(t *testing.T) {
 	d := dag.NewDAG()
-
-	if d.ID == uuid.Nil {
-		t.Fatalf("DAG ID expected to be not nil.\n")
-	}
 
 	if len(d.Vertices) != 0 {
 		t.Fatalf("DAG number of vertices expected to be 0 but got %d", len(d.Vertices))

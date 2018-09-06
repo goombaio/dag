@@ -27,7 +27,7 @@ go get -u github.com/goombaio/dag
 ## Example of use
 
 ```go
-// Create the dag.s
+// Create the dag
 dag1 := dag.NewDAG()
 
 // Create the vertices.
@@ -49,7 +49,6 @@ dag1.AddEdge(vertex2, vertex3)
 dag1.AddEdge(vertex2, vertex4)
 dag1.AddEdge(vertex4, vertex3)
 ```
-
 
 ## License
 

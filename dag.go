@@ -26,8 +26,6 @@ import (
 
 // DAG ...
 type DAG struct {
-	ID uuid.UUID
-
 	mu       sync.Mutex
 	Vertices map[uuid.UUID]*Vertex
 }
@@ -35,8 +33,6 @@ type DAG struct {
 // NewDAG ...
 func NewDAG() *DAG {
 	d := &DAG{
-		ID: uuid.New(),
-
 		Vertices: make(map[uuid.UUID]*Vertex, 0),
 	}
 
