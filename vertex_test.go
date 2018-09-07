@@ -31,6 +31,24 @@ func TestVertexInstance(t *testing.T) {
 	}
 }
 
+func TestVertexParents(t *testing.T) {
+	v := dag.NewVertex("1", nil)
+
+	numParents := v.Parents.Size()
+	if numParents != 0 {
+		t.Fatalf("Vertex Parents expected to be 0 but got %d", v.Parents.Size())
+	}
+}
+
+func TestVertexChildren(t *testing.T) {
+	v := dag.NewVertex("1", nil)
+
+	numParents := v.Children.Size()
+	if numParents != 0 {
+		t.Fatalf("Vertex Children expected to be 0 but got %d", v.Children.Size())
+	}
+}
+
 func TestVertexStringer(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 	vstr := v.String()
