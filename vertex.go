@@ -44,8 +44,7 @@ func NewVertex(id string, value interface{}) *Vertex {
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (v *Vertex) String() string {
-	var result string
-	result = fmt.Sprintf("Vertex ID: %s\n", v.ID)
+	result := fmt.Sprintf("Vertex ID: %s - Parents: %d - Children: %d\n", v.ID, v.Parents.Size(), v.Children.Size())
 
 	return result
 }
