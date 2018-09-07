@@ -20,19 +20,20 @@ package dag
 import (
 	"fmt"
 	"sync"
+
+	"github.com/goombaio/orderedmap"
 )
 
 // DAG type implements a Directed acyclic graph data structure.
-// https://en.wikipedia.org/wiki/Directed_acyclic_graph.
 type DAG struct {
 	mu       sync.Mutex
-	Vertices map[string]*Vertex
+	Vertices *orderedmap.OrderedMap
 }
 
 // NewDAG creates a new directed acyclic graph instance.
 func NewDAG() *DAG {
 	d := &DAG{
-		Vertices: make(map[string]*Vertex, 0),
+		Vertices: orderedmap.NewOrderedMap(),
 	}
 
 	return d
@@ -43,7 +44,7 @@ func (d *DAG) AddVertex(v *Vertex) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 
-	d.Vertices[v.ID] = v
+	d.Vertices.Put(v.ID, v)
 
 	return nil
 }
@@ -57,7 +58,7 @@ func (d *DAG) DeleteVertex(vertex *Vertex) error {
 	defer d.mu.Unlock()
 
 	// Check if vertexs exists.
-	for _, v := range d.Vertices {
+	for _, v := range d.Vertices.Values() {
 		if v == vertex {
 			existsVertex = true
 		}
@@ -66,7 +67,7 @@ func (d *DAG) DeleteVertex(vertex *Vertex) error {
 		return fmt.Errorf("Vertex with ID %v not found", vertex.ID)
 	}
 
-	delete(d.Vertices, vertex.ID)
+	d.Vertices.Remove(vertex.ID)
 
 	return nil
 }
@@ -80,7 +81,7 @@ func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
 	defer d.mu.Unlock()
 
 	// Check if vertexs exists.
-	for _, vertex := range d.Vertices {
+	for _, vertex := range d.Vertices.Values() {
 		if vertex == tailVertex {
 			tailExists = true
 		}
@@ -96,15 +97,15 @@ func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
 	}
 
 	// Check if edge already exists.
-	for _, childVertex := range tailVertex.Children {
+	for _, childVertex := range tailVertex.Children.Values() {
 		if childVertex == headVertex {
 			return fmt.Errorf("Edge (%v,%v) already exists", tailVertex.ID, headVertex.ID)
 		}
 	}
 
 	// Add edge.
-	tailVertex.Children = append(tailVertex.Children, headVertex)
-	headVertex.Parents = append(headVertex.Parents, tailVertex)
+	tailVertex.Children.Add(headVertex)
+	headVertex.Parents.Add(tailVertex)
 
 	return nil
 }
@@ -112,10 +113,9 @@ func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
 // DeleteEdge deletes a directed edge between two existing vertices from the
 // graph.
 func (d *DAG) DeleteEdge(tailVertex *Vertex, headVertex *Vertex) error {
-	for i, childVertex := range tailVertex.Children {
+	for _, childVertex := range tailVertex.Children.Values() {
 		if childVertex == headVertex {
-			tailVertex.Children[i] = tailVertex.Children[len(tailVertex.Children)-1]
-			tailVertex.Children = tailVertex.Children[:len(tailVertex.Children)-1]
+			tailVertex.Children.Remove(childVertex)
 		}
 	}
 
@@ -124,7 +124,7 @@ func (d *DAG) DeleteEdge(tailVertex *Vertex, headVertex *Vertex) error {
 
 // Order return the number of vertices in the graph.
 func (d *DAG) Order() int {
-	numVertices := len(d.Vertices)
+	numVertices := d.Vertices.Size()
 
 	return numVertices
 }
@@ -132,8 +132,8 @@ func (d *DAG) Order() int {
 // Size return the number of edges in the graph.
 func (d *DAG) Size() int {
 	numEdges := 0
-	for _, vertex := range d.Vertices {
-		numEdges = numEdges + len(vertex.Children)
+	for _, vertex := range d.Vertices.Values() {
+		numEdges = numEdges + vertex.(*Vertex).Children.Size()
 	}
 
 	return numEdges
@@ -143,9 +143,9 @@ func (d *DAG) Size() int {
 func (d *DAG) SinkVertices() []*Vertex {
 	var sinkVertices []*Vertex
 
-	for _, vertex := range d.Vertices {
-		if len(vertex.Children) == 0 {
-			sinkVertices = append(sinkVertices, vertex)
+	for _, vertex := range d.Vertices.Values() {
+		if vertex.(*Vertex).Children.Size() == 0 {
+			sinkVertices = append(sinkVertices, vertex.(*Vertex))
 		}
 	}
 
@@ -158,10 +158,10 @@ func (d *DAG) String() string {
 	var result string
 	result = fmt.Sprintf("DAG Vertices: %d - Edges: %d\n", d.Order(), d.Size())
 	result = result + fmt.Sprintf("Vertexs:\n")
-	for _, vertex := range d.Vertices {
-		result = result + fmt.Sprintf("  ID: %s - Parents: %d - Children: %d\n", vertex.ID, len(vertex.Parents), len(vertex.Children))
-		result = result + fmt.Sprintf("    Parents: %s\n", vertex.ParentsIDs())
-		result = result + fmt.Sprintf("    Children: %s\n", vertex.ChidrenIDs())
+	for _, vertex := range d.Vertices.Values() {
+		result = result + fmt.Sprintf("  ID: %s - Parents: %d - Children: %d\n", vertex.(*Vertex).ID, vertex.(*Vertex).Parents.Size(), vertex.(*Vertex).Children.Size())
+		result = result + fmt.Sprintf("    Parents: %s\n", vertex.(*Vertex).Parents.Keys())
+		result = result + fmt.Sprintf("    Children: %s\n", vertex.(*Vertex).Children.Keys())
 	}
 
 	return result

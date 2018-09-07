@@ -57,6 +57,8 @@ lint:			## Lint source code
 
 deps:			## Install build dependencies
 	go get -u github.com/google/uuid
+	go get -u github.com/goombaio/orderedmap
+	go get -u github.com/goombaio/orderedset
 
 dev-deps: deps
 dev-deps:		## Install dev and build dependencies

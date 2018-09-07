@@ -17,40 +17,24 @@
 
 package dag
 
+import (
+	"github.com/goombaio/orderedset"
+)
+
 // Vertex ...
 type Vertex struct {
 	ID       string
-	Parents  []*Vertex
-	Children []*Vertex
+	Parents  *orderedset.OrderedSet
+	Children *orderedset.OrderedSet
 }
 
 // NewVertex ...
 func NewVertex(id string, value interface{}) *Vertex {
 	v := &Vertex{
 		ID:       id,
-		Parents:  make([]*Vertex, 0),
-		Children: make([]*Vertex, 0),
+		Parents:  orderedset.NewOrderedSet(),
+		Children: orderedset.NewOrderedSet(),
 	}
 
 	return v
-}
-
-// ParentsIDs ...
-func (v *Vertex) ParentsIDs() []string {
-	var ids []string
-	for _, vertex := range v.Parents {
-		ids = append(ids, vertex.ID)
-	}
-
-	return ids
-}
-
-// ChidrenIDs ...
-func (v *Vertex) ChidrenIDs() []string {
-	var ids []string
-	for _, vertex := range v.Children {
-		ids = append(ids, vertex.ID)
-	}
-
-	return ids
 }
