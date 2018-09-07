@@ -174,20 +174,17 @@ func TestDeleteEdge(t *testing.T) {
 		t.Fatalf("Dag expected to have 1 edge but got %d", size)
 	}
 
-	/*
-		err = dag1.DeleteEdge(vertex1, vertex2)
-		if err != nil {
-			t.Fatalf("Can't delete edge from DAG")
-		}
+	err = dag1.DeleteEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't delete edge from DAG")
+	}
 
-		size = dag1.Size()
-		if size != 0 {
-			t.Fatalf("Dag expected to have 0 edges but got %d", size)
-		}
-	*/
+	size = dag1.Size()
+	if size != 0 {
+		t.Fatalf("Dag expected to have 0 edges but got %d", size)
+	}
 }
 
-/*
 func TestGraphOrder(t *testing.T) {
 	dag1 := dag.NewDAG()
 
@@ -305,4 +302,3 @@ func TestSinkVertices(t *testing.T) {
 		t.Fatalf("Expected to have 1 Sink vertex but got %d", len(sinkVertices))
 	}
 }
-*/

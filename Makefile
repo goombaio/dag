@@ -64,6 +64,7 @@ dev-deps: deps
 dev-deps:		## Install dev and build dependencies
 	go get -u github.com/alecthomas/gometalinter
 	gometalinter --install
+	go get -u github.com/derekparker/delve/cmd/dlv
 
 .PHONY: clean
 clean:			## Delete generated development environment

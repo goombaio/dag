@@ -18,6 +18,8 @@
 package dag
 
 import (
+	"fmt"
+
 	"github.com/goombaio/orderedset"
 )
 
@@ -37,4 +39,13 @@ func NewVertex(id string, value interface{}) *Vertex {
 	}
 
 	return v
+}
+
+// String implements stringer interface and prints an string representation
+// of this instance.
+func (v *Vertex) String() string {
+	var result string
+	result = fmt.Sprintf("  Vertex ID: %s\n", v.ID)
+
+	return result
 }

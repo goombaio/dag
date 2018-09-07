@@ -17,7 +17,12 @@
 
 package dag_test
 
-/*
+import (
+	"fmt"
+
+	"github.com/goombaio/dag"
+)
+
 func ExampleDAG() {
 
 	dag1 := dag.NewDAG()
@@ -133,4 +138,3 @@ func ExampleDAG_second() {
 	//     Parents: [3]
 	//     Children: []
 }
-*/

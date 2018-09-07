@@ -27,13 +27,13 @@ import (
 // DAG type implements a Directed acyclic graph data structure.
 type DAG struct {
 	mu       sync.Mutex
-	Vertices *orderedmap.OrderedMap
+	Vertices orderedmap.OrderedMap
 }
 
 // NewDAG creates a new directed acyclic graph instance.
 func NewDAG() *DAG {
 	d := &DAG{
-		Vertices: orderedmap.NewOrderedMap(),
+		Vertices: *orderedmap.NewOrderedMap(),
 	}
 
 	return d
@@ -152,16 +152,16 @@ func (d *DAG) SinkVertices() []*Vertex {
 	return sinkVertices
 }
 
-// String implements stringer interface and prints ab strubg representation
+// String implements stringer interface and prints an string representation
 // of this instance.
 func (d *DAG) String() string {
 	var result string
 	result = fmt.Sprintf("DAG Vertices: %d - Edges: %d\n", d.Order(), d.Size())
 	result = result + fmt.Sprintf("Vertexs:\n")
 	for _, vertex := range d.Vertices.Values() {
-		result = result + fmt.Sprintf("  ID: %s - Parents: %d - Children: %d\n", vertex.(*Vertex).ID, vertex.(*Vertex).Parents.Size(), vertex.(*Vertex).Children.Size())
-		result = result + fmt.Sprintf("    Parents: %s\n", vertex.(*Vertex).Parents.Keys())
-		result = result + fmt.Sprintf("    Children: %s\n", vertex.(*Vertex).Children.Keys())
+		vertex = vertex.(*Vertex)
+
+		result = result + fmt.Sprintf("%s", vertex)
 	}
 
 	return result
