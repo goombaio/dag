@@ -30,3 +30,13 @@ func TestVertexInstance(t *testing.T) {
 		t.Fatalf("Vertex ID expected to be not empty string.\n")
 	}
 }
+
+func TestVertexStringer(t *testing.T) {
+	v := dag.NewVertex("1", nil)
+	vstr := v.String()
+
+	expected := "Vertex ID: 1\n"
+	if vstr != expected {
+		t.Fatalf("Vertex stringer expected to be %q but got %q", expected, vstr)
+	}
+}

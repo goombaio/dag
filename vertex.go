@@ -45,7 +45,7 @@ func NewVertex(id string, value interface{}) *Vertex {
 // of this instance.
 func (v *Vertex) String() string {
 	var result string
-	result = fmt.Sprintf("  Vertex ID: %s\n", v.ID)
+	result = fmt.Sprintf("Vertex ID: %s\n", v.ID)
 
 	return result
 }
