@@ -53,7 +53,7 @@ func TestVertexStringer(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 	vstr := v.String()
 
-	expected := "Vertex ID: 1 - Parents: 0 - Children: 0\n"
+	expected := "ID: 1 - Parents: 0 - Children: 0\n"
 	if vstr != expected {
 		t.Fatalf("Vertex stringer expected to be %q but got %q\n", expected, vstr)
 	}
