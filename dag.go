@@ -169,11 +169,9 @@ func (d *DAG) SourceVertices() []*Vertex {
 // A DAG is valid if all edges in the graph point to existing vertices, and
 // that there are no dependency cycles.
 func (d *DAG) Validate() bool {
-	// If there are no vertices
+	// If there are no vertices (we need at least one root vertex)
 	if d.Order() == 0 {
-		// TODO:
-		// Sure? A DAG without vertices is valid?
-		return true
+		return false
 	}
 
 	// If there are no Source vertices
