@@ -165,6 +165,22 @@ func (d *DAG) SourceVertices() []*Vertex {
 	return sourceVertices
 }
 
+// Successors return vertices that are children of a given vertex.
+func (d *DAG) Successors(vertex *Vertex) ([]*Vertex, error) {
+	var successors []*Vertex
+
+	_, found := d.Vertices.Get(vertex.ID)
+	if found != true {
+		return successors, fmt.Errorf("vertex not found in the graph")
+	}
+
+	for _, v := range vertex.Children.Values() {
+		successors = append(successors, v.(*Vertex))
+	}
+
+	return successors, nil
+}
+
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (d *DAG) String() string {
