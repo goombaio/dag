@@ -280,6 +280,11 @@ func TestDAG_Size(t *testing.T) {
 func TestDAG_SinkVertices(t *testing.T) {
 	dag1 := dag.NewDAG()
 
+	sinkVertices := dag1.SinkVertices()
+	if len(sinkVertices) != 0 {
+		t.Fatalf("Expected to have 0 Sink vertices but got %d", len(sinkVertices))
+	}
+
 	vertex1 := dag.NewVertex("1", nil)
 	vertex2 := dag.NewVertex("2", nil)
 
@@ -292,13 +297,55 @@ func TestDAG_SinkVertices(t *testing.T) {
 		t.Fatalf("Can't add vertex to DAG: %s", err)
 	}
 
+	sinkVertices = dag1.SinkVertices()
+	if len(sinkVertices) != 2 {
+		t.Fatalf("Expected to have 2 Sink vertices but got %d", len(sinkVertices))
+	}
+
 	err = dag1.AddEdge(vertex1, vertex2)
 	if err != nil {
 		t.Fatalf("Can't add edge to DAG: %s", err)
 	}
 
-	sinkVertices := dag1.SinkVertices()
+	sinkVertices = dag1.SinkVertices()
 	if len(sinkVertices) != 1 {
 		t.Fatalf("Expected to have 1 Sink vertex but got %d", len(sinkVertices))
 	}
+}
+
+func TestDAG_SourceVertices(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	sourceVertices := dag1.SourceVertices()
+	if len(sourceVertices) != 0 {
+		t.Fatalf("Expected to have 0 Source vertices but got %d", len(sourceVertices))
+	}
+
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+
+	sourceVertices = dag1.SourceVertices()
+	if len(sourceVertices) != 2 {
+		t.Fatalf("Expected to have 2 Source vertices but got %d", len(sourceVertices))
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG: %s", err)
+	}
+
+	sourceVertices = dag1.SourceVertices()
+	if len(sourceVertices) != 1 {
+		t.Fatalf("Expected to have 1 Source vertex but got %d", len(sourceVertices))
+	}
+
 }
