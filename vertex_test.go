@@ -52,6 +52,15 @@ func TestVertex_Children(t *testing.T) {
 	}
 }
 
+func TestVertex_Degree(t *testing.T) {
+	v := dag.NewVertex("1", nil)
+
+	degree := v.Degree()
+	if degree != 0 {
+		t.Fatalf("Vertex Degree expected to be 0 but got %d", v.Degree())
+	}
+}
+
 func TestVertex_String(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 	vstr := v.String()
