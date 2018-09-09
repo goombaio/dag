@@ -165,6 +165,20 @@ func (d *DAG) SourceVertices() []*Vertex {
 	return sourceVertices
 }
 
+// Validate return a boolean value whether DAG is valid or not.
+// A DAG is valid if all edges in the graph point to existing vertices, and
+// that there are no dependency cycles.
+func (d *DAG) Validate() bool {
+	// If there are no vertices
+	if d.Order() == 0 {
+		// TODO:
+		// Sure? A DAG without vertexs and edges is valid?
+		return true
+	}
+
+	return false
+}
+
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (d *DAG) String() string {

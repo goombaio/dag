@@ -347,5 +347,13 @@ func TestDAG_SourceVertices(t *testing.T) {
 	if len(sourceVertices) != 1 {
 		t.Fatalf("Expected to have 1 Source vertex but got %d", len(sourceVertices))
 	}
+}
 
+func TestDAG_Validate(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	valid := dag1.Validate()
+	if !valid {
+		t.Fatalf("Expected to be valid, but it does not.")
+	}
 }
