@@ -54,6 +54,12 @@ func (v *Vertex) InDegree() int {
 	return v.Parents.Size()
 }
 
+// OutDegree return the number of children of the vertex or the number of edges
+// leaving it.
+func (v *Vertex) OutDegree() int {
+	return v.Children.Size()
+}
+
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (v *Vertex) String() string {
