@@ -152,6 +152,19 @@ func (d *DAG) SinkVertices() []*Vertex {
 	return sinkVertices
 }
 
+// SourceVertices return vertices with no parent defined by the graph edges.
+func (d *DAG) SourceVertices() []*Vertex {
+	var sourceVertices []*Vertex
+
+	for _, vertex := range d.Vertices.Values() {
+		if vertex.(*Vertex).Parents.Size() == 0 {
+			sourceVertices = append(sourceVertices, vertex.(*Vertex))
+		}
+	}
+
+	return sourceVertices
+}
+
 // Validate return a boolean value whether DAG is valid or not.
 // A DAG is valid if all edges in the graph point to existing vertices, and
 // that there are no dependency cycles.
@@ -171,7 +184,7 @@ func (d *DAG) Validate() bool {
 func (d *DAG) String() string {
 	var result string
 	result = fmt.Sprintf("DAG Vertices: %d - Edges: %d\n", d.Order(), d.Size())
-	result = result + fmt.Sprintf("Vertexs:\n")
+	result = result + fmt.Sprintf("Vertices:\n")
 	for _, vertex := range d.Vertices.Values() {
 		vertex = vertex.(*Vertex)
 

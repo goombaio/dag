@@ -56,7 +56,7 @@ func ExampleDAG_vertices() {
 	fmt.Println(dag1.String())
 	// Output:
 	// DAG Vertices: 4 - Edges: 0
-	// Vertexs:
+	// Vertices:
 	// ID: 1 - Parents: 0 - Children: 0 - Value: <nil>
 	// ID: 2 - Parents: 0 - Children: 0 - Value: <nil>
 	// ID: 3 - Parents: 0 - Children: 0 - Value: <nil>
@@ -116,7 +116,7 @@ func ExampleDAG_edges() {
 	fmt.Println(dag1.String())
 	// Output:
 	// DAG Vertices: 4 - Edges: 3
-	// Vertexs:
+	// Vertices:
 	// ID: 1 - Parents: 0 - Children: 1 - Value: <nil>
 	// ID: 2 - Parents: 1 - Children: 1 - Value: <nil>
 	// ID: 3 - Parents: 1 - Children: 1 - Value: <nil>
