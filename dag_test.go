@@ -440,3 +440,30 @@ func TestDAG_Predecessors(t *testing.T) {
 		t.Fatalf("Predecessor vertex expected to be '1' but got %q", predecessors[0].ID)
 	}
 }
+
+func TestDAG_Predecessors_VertexNotFound(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+	vertex3 := dag.NewVertex("3", nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG: %s", err)
+	}
+
+	predecessors, err := dag1.Predecessors(vertex3)
+	if err == nil {
+		t.Fatalf("Got %d predecessors for vertex %s, but expected to fail", len(predecessors), vertex3.ID)
+	}
+}
