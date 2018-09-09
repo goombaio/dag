@@ -170,7 +170,7 @@ func (d *DAG) SourceVertices() []*Vertex {
 func (d *DAG) String() string {
 	var result string
 	result = fmt.Sprintf("DAG Vertices: %d - Edges: %d\n", d.Order(), d.Size())
-	result = result + fmt.Sprintf("Vertexs:\n")
+	result = result + fmt.Sprintf("Vertices:\n")
 	for _, vertex := range d.Vertices.Values() {
 		vertex = vertex.(*Vertex)
 
