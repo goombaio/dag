@@ -302,3 +302,12 @@ func TestDAG_SinkVertices(t *testing.T) {
 		t.Fatalf("Expected to have 1 Sink vertex but got %d", len(sinkVertices))
 	}
 }
+
+func TestDAG_Validate(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	valid := dag1.Validate()
+	if !valid {
+		t.Fatalf("Expected to be valid, but it does not.")
+	}
+}
