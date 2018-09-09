@@ -349,8 +349,52 @@ func TestDAG_SourceVertices(t *testing.T) {
 	}
 }
 
-func TestDAG_Validate(t *testing.T) {
+func TestDAG_Validate_WithoutVertices(t *testing.T) {
 	dag1 := dag.NewDAG()
+
+	valid := dag1.Validate()
+	if valid {
+		t.Fatalf("Expected to be not valid, but it is.")
+	}
+}
+
+func TestDAG_Validate_WithOneVertexNoneEdges(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex("1", nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+
+	valid := dag1.Validate()
+	if !valid {
+		t.Fatalf("Expected to be valid, but it does not.")
+	}
+}
+
+func TestDAG_Validate_WithTwoVerticesOneEdge(t *testing.T) {
+	t.Skip()
+
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG: %s", err)
+	}
 
 	valid := dag1.Validate()
 	if !valid {

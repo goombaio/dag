@@ -169,7 +169,7 @@ func (d *DAG) SourceVertices() []*Vertex {
 // A DAG is valid if all edges in the graph point to existing vertices, and
 // that there are no dependency cycles.
 func (d *DAG) Validate() bool {
-	// If there are no vertices (we need at least one root vertex)
+	// If there are no vertices (we need at least one source vertex)
 	if d.Order() == 0 {
 		return false
 	}
@@ -179,7 +179,16 @@ func (d *DAG) Validate() bool {
 		return false
 	}
 
-	return false
+	// // If there are no edges (therefore are only source vertices, so it is
+	// valid)
+	// FIXME: Is that true?
+	if d.Size() == 0 {
+		return true
+	}
+
+	valid := !d.hasCycles()
+
+	return valid
 }
 
 // String implements stringer interface and prints an string representation
@@ -195,4 +204,42 @@ func (d *DAG) String() string {
 	}
 
 	return result
+}
+
+func (d *DAG) hasCycles() bool {
+	visited := make(map[interface{}]bool)
+	recursionStack := make(map[interface{}]bool)
+
+	for vertex := range d.Vertices.Keys() {
+		if !visited[vertex] {
+			if d.hasCyclesHelper(vertex, visited, recursionStack) {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
+func (d *DAG) hasCyclesHelper(key interface{}, visited map[interface{}]bool, recursionStack map[interface{}]bool) bool {
+	visited[key] = true
+	recursionStack[key] = true
+
+	vertex, _ := d.Vertices.Get(key)
+	for _, v := range vertex.(*Vertex).Children.Values() {
+		// only check cycles on a vertex one time
+		if !visited[v] {
+			if d.hasCyclesHelper(v, visited, recursionStack) {
+				return true
+			}
+			// if we've visited this vertex in this recursion stack, then we
+			// have a cycle
+		} else if recursionStack[v] {
+			return true
+		}
+
+	}
+	recursionStack[vertex] = false
+
+	return false
 }
