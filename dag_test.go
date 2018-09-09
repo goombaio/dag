@@ -302,3 +302,25 @@ func TestDAG_SinkVertices(t *testing.T) {
 		t.Fatalf("Expected to have 1 Sink vertex but got %d", len(sinkVertices))
 	}
 }
+
+func TestDAG_SourceVertices(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+
+	sourceVertices := dag1.SourceVertices()
+	if len(sourceVertices) != 2 {
+		t.Fatalf("Expected to have 2 Source vertices but got %d", len(sourceVertices))
+	}
+
+}
