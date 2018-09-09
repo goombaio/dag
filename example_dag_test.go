@@ -23,7 +23,7 @@ import (
 	"github.com/goombaio/dag"
 )
 
-func ExampleDAG_vertexs() {
+func ExampleDAG_vertices() {
 
 	dag1 := dag.NewDAG()
 

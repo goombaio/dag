@@ -23,7 +23,7 @@ import (
 	"github.com/goombaio/dag"
 )
 
-func TestDAGInstance(t *testing.T) {
+func TestDAG(t *testing.T) {
 	d := dag.NewDAG()
 
 	if d.Vertices.Size() != 0 {
@@ -31,7 +31,7 @@ func TestDAGInstance(t *testing.T) {
 	}
 }
 
-func TestAddVertex(t *testing.T) {
+func TestDAG_AddVertex(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)
@@ -46,7 +46,7 @@ func TestAddVertex(t *testing.T) {
 	}
 }
 
-func TestDeleteVertex(t *testing.T) {
+func TestDAG_DeleteVertex(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)
@@ -75,7 +75,7 @@ func TestDeleteVertex(t *testing.T) {
 	}
 }
 
-func TestAddEdge(t *testing.T) {
+func TestDAG_AddEdge(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)
@@ -96,7 +96,7 @@ func TestAddEdge(t *testing.T) {
 	}
 }
 
-func TestAddEdgeFailsVertextDontExist(t *testing.T) {
+func TestDAG_AddEdge_FailsVertextDontExist(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)
@@ -123,7 +123,7 @@ func TestAddEdgeFailsVertextDontExist(t *testing.T) {
 	}
 }
 
-func TestAddEdgeFailsAlreadyExists(t *testing.T) {
+func TestDAG_AddEdge_FailsAlreadyExists(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)
@@ -149,7 +149,7 @@ func TestAddEdgeFailsAlreadyExists(t *testing.T) {
 	}
 }
 
-func TestDeleteEdge(t *testing.T) {
+func TestDAG_DeleteEdge(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)
@@ -185,7 +185,7 @@ func TestDeleteEdge(t *testing.T) {
 	}
 }
 
-func TestGraphOrder(t *testing.T) {
+func TestDAG_Order(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	expected_order := 0
@@ -218,7 +218,7 @@ func TestGraphOrder(t *testing.T) {
 	}
 }
 
-func TestGraphSize(t *testing.T) {
+func TestDAG_Size(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	expected_size := 0
@@ -277,7 +277,7 @@ func TestGraphSize(t *testing.T) {
 	}
 }
 
-func TestSinkVertices(t *testing.T) {
+func TestDAG_SinkVertices(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)

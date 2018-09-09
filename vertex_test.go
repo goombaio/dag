@@ -23,7 +23,7 @@ import (
 	"github.com/goombaio/dag"
 )
 
-func TestVertexInstance(t *testing.T) {
+func TestVertex(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 
 	if v.ID == "" {
@@ -31,7 +31,7 @@ func TestVertexInstance(t *testing.T) {
 	}
 }
 
-func TestVertexParents(t *testing.T) {
+func TestVertex_Parents(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 
 	numParents := v.Parents.Size()
@@ -40,7 +40,7 @@ func TestVertexParents(t *testing.T) {
 	}
 }
 
-func TestVertexChildren(t *testing.T) {
+func TestVertex_Children(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 
 	numParents := v.Children.Size()
@@ -49,7 +49,7 @@ func TestVertexChildren(t *testing.T) {
 	}
 }
 
-func TestVertexStringer(t *testing.T) {
+func TestVertex_String(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 	vstr := v.String()
 
