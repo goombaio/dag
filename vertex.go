@@ -26,6 +26,7 @@ import (
 // Vertex ...
 type Vertex struct {
 	ID       string
+	Value    interface{}
 	Parents  *orderedset.OrderedSet
 	Children *orderedset.OrderedSet
 }
@@ -36,6 +37,7 @@ func NewVertex(id string, value interface{}) *Vertex {
 		ID:       id,
 		Parents:  orderedset.NewOrderedSet(),
 		Children: orderedset.NewOrderedSet(),
+		Value:    value,
 	}
 
 	return v
@@ -44,7 +46,7 @@ func NewVertex(id string, value interface{}) *Vertex {
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (v *Vertex) String() string {
-	result := fmt.Sprintf("ID: %s - Parents: %d - Children: %d\n", v.ID, v.Parents.Size(), v.Children.Size())
+	result := fmt.Sprintf("ID: %s - Parents: %d - Children: %d - Value: %v\n", v.ID, v.Parents.Size(), v.Children.Size(), v.Value)
 
 	return result
 }

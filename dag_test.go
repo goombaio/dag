@@ -79,7 +79,7 @@ func TestDAG_AddEdge(t *testing.T) {
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)
-	vertex2 := dag.NewVertex("2", nil)
+	vertex2 := dag.NewVertex("2", "two")
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {
