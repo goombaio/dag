@@ -43,6 +43,11 @@ func NewVertex(id string, value interface{}) *Vertex {
 	return v
 }
 
+// Degree return the number of parents and children of the vertex
+func (v *Vertex) Degree() int {
+	return v.Parents.Size() + v.Children.Size()
+}
+
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (v *Vertex) String() string {
