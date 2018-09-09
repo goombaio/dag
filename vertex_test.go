@@ -29,6 +29,9 @@ func TestVertex(t *testing.T) {
 	if v.ID == "" {
 		t.Fatalf("Vertex ID expected to be not empty string.\n")
 	}
+	if v.Value != nil {
+		t.Fatalf("Vertex Value expected to be nil.\n")
+	}
 }
 
 func TestVertex_Parents(t *testing.T) {
@@ -53,8 +56,29 @@ func TestVertex_String(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 	vstr := v.String()
 
-	expected := "ID: 1 - Parents: 0 - Children: 0\n"
+	expected := "ID: 1 - Parents: 0 - Children: 0 - Value: <nil>\n"
 	if vstr != expected {
 		t.Fatalf("Vertex stringer expected to be %q but got %q\n", expected, vstr)
+	}
+}
+
+func TestVertex_String_WithStringValue(t *testing.T) {
+	v := dag.NewVertex("1", "one")
+	vstr := v.String()
+
+	expected := "ID: 1 - Parents: 0 - Children: 0 - Value: one\n"
+	if vstr != expected {
+		t.Fatalf("Vertex stringer expected to be %q but got %q\n", expected, vstr)
+	}
+}
+
+func TestVertex_WithStringValue(t *testing.T) {
+	v := dag.NewVertex("1", "one")
+
+	if v.ID == "" {
+		t.Fatalf("Vertex ID expected to be not empty string.\n")
+	}
+	if v.Value != "one" {
+		t.Fatalf("Vertex Value expected to be one.\n")
 	}
 }
