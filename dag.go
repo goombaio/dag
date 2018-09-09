@@ -191,6 +191,38 @@ func (d *DAG) Validate() bool {
 	return valid
 }
 
+// Successors return vertices that are children of a given vertex.
+func (d *DAG) Successors(vertex *Vertex) ([]*Vertex, error) {
+	var successors []*Vertex
+
+	_, found := d.Vertices.Get(vertex.ID)
+	if found != true {
+		return successors, fmt.Errorf("vertex %s not found in the graph", vertex.ID)
+	}
+
+	for _, v := range vertex.Children.Values() {
+		successors = append(successors, v.(*Vertex))
+	}
+
+	return successors, nil
+}
+
+// Predecessors return vertices that are parent of a given vertex.
+func (d *DAG) Predecessors(vertex *Vertex) ([]*Vertex, error) {
+	var predecessors []*Vertex
+
+	_, found := d.Vertices.Get(vertex.ID)
+	if found != true {
+		return predecessors, fmt.Errorf("vertex %s not found in the graph", vertex.ID)
+	}
+
+	for _, v := range vertex.Parents.Values() {
+		predecessors = append(predecessors, v.(*Vertex))
+	}
+
+	return predecessors, nil
+}
+
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (d *DAG) String() string {
