@@ -172,8 +172,13 @@ func (d *DAG) Validate() bool {
 	// If there are no vertices
 	if d.Order() == 0 {
 		// TODO:
-		// Sure? A DAG without vertexs and edges is valid?
+		// Sure? A DAG without vertices is valid?
 		return true
+	}
+
+	// If there are no Source vertices
+	if len(d.SourceVertices()) == 0 {
+		return false
 	}
 
 	return false
