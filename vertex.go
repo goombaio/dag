@@ -48,6 +48,12 @@ func (v *Vertex) Degree() int {
 	return v.Parents.Size() + v.Children.Size()
 }
 
+// InDegree return the number of parents of the vertex or the number of edges
+// entering on it.
+func (v *Vertex) InDegree() int {
+	return v.Parents.Size()
+}
+
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (v *Vertex) String() string {

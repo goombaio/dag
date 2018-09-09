@@ -96,7 +96,52 @@ func TestVertex_Degree(t *testing.T) {
 	if degree != 2 {
 		t.Fatalf("Vertex2 Degree expected to be 2 but got %d", vertex2.Degree())
 	}
+}
 
+func TestVertex_InDegree(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+	vertex3 := dag.NewVertex("3", nil)
+
+	inDegree := vertex1.InDegree()
+	if inDegree != 0 {
+		t.Fatalf("Vertex1 InDegree expected to be 0 but got %d", vertex1.InDegree())
+	}
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex3)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG: %s", err)
+	}
+
+	err = dag1.AddEdge(vertex2, vertex3)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG: %s", err)
+	}
+
+	inDegree = vertex1.InDegree()
+	if inDegree != 0 {
+		t.Fatalf("Vertex1 InDegree expected to be 0 but got %d", vertex1.InDegree())
+	}
+
+	inDegree = vertex2.InDegree()
+	if inDegree != 1 {
+		t.Fatalf("Vertex2 InDegree expected to be 1 but got %d", vertex2.InDegree())
+	}
 }
 
 func TestVertex_String(t *testing.T) {
