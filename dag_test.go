@@ -381,3 +381,30 @@ func TestDAG_Successors(t *testing.T) {
 		t.Fatalf("Successor vertex expected to be '2' but got %q", successors[0].ID)
 	}
 }
+
+func TestDAG_Successors_VertexNotFound(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex("1", nil)
+	vertex2 := dag.NewVertex("2", nil)
+	vertex3 := dag.NewVertex("3", nil)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex to DAG: %s", err)
+	}
+
+	err = dag1.AddEdge(vertex1, vertex2)
+	if err != nil {
+		t.Fatalf("Can't add edge to DAG: %s", err)
+	}
+
+	successors, err := dag1.Successors(vertex3)
+	if err == nil {
+		t.Fatalf("Got %d successors for vertex %s, but expected to fail", len(successors), vertex1.ID)
+	}
+}
