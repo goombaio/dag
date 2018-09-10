@@ -375,12 +375,10 @@ func TestDAG_Validate_WithOneVertexNoneEdges(t *testing.T) {
 }
 
 func TestDAG_Validate_WithTwoVerticesOneEdge(t *testing.T) {
-	t.Skip()
-
 	dag1 := dag.NewDAG()
 
-	vertex1 := dag.NewVertex("1", nil)
-	vertex2 := dag.NewVertex("2", nil)
+	vertex1 := dag.NewVertex("1", "one")
+	vertex2 := dag.NewVertex("2", "two")
 
 	err := dag1.AddVertex(vertex1)
 	if err != nil {

@@ -232,7 +232,7 @@ func (d *DAG) String() string {
 	for _, vertex := range d.Vertices.Values() {
 		vertex = vertex.(*Vertex)
 
-		result = result + fmt.Sprintf("%s", vertex)
+		result = result + fmt.Sprintf("%s\n", vertex)
 	}
 
 	return result
@@ -242,9 +242,9 @@ func (d *DAG) hasCycles() bool {
 	visited := make(map[interface{}]bool)
 	recursionStack := make(map[interface{}]bool)
 
-	for vertex := range d.Vertices.Keys() {
-		if !visited[vertex] {
-			if d.hasCyclesHelper(vertex, visited, recursionStack) {
+	for _, key := range d.Vertices.Keys() {
+		if !visited[key] {
+			if d.hasCyclesHelper(key, visited, recursionStack) {
 				return true
 			}
 		}
@@ -258,18 +258,18 @@ func (d *DAG) hasCyclesHelper(key interface{}, visited map[interface{}]bool, rec
 	recursionStack[key] = true
 
 	vertex, _ := d.Vertices.Get(key)
-	for _, v := range vertex.(*Vertex).Children.Values() {
+	successors, _ := d.Successors(vertex.(*Vertex))
+	for _, v := range successors {
 		// only check cycles on a vertex one time
-		if !visited[v] {
-			if d.hasCyclesHelper(v, visited, recursionStack) {
+		if !visited[v.ID] {
+			if d.hasCyclesHelper(v.ID, visited, recursionStack) {
 				return true
 			}
 			// if we've visited this vertex in this recursion stack, then we
 			// have a cycle
-		} else if recursionStack[v] {
+		} else if recursionStack[v.ID] {
 			return true
 		}
-
 	}
 	recursionStack[vertex] = false
 

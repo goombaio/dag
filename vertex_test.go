@@ -199,7 +199,7 @@ func TestVertex_String(t *testing.T) {
 	v := dag.NewVertex("1", nil)
 	vstr := v.String()
 
-	expected := "ID: 1 - Parents: 0 - Children: 0 - Value: <nil>\n"
+	expected := "ID: 1 - Parents: 0 - Children: 0 - Value: <nil>"
 	if vstr != expected {
 		t.Fatalf("Vertex stringer expected to be %q but got %q\n", expected, vstr)
 	}
@@ -209,7 +209,7 @@ func TestVertex_String_WithStringValue(t *testing.T) {
 	v := dag.NewVertex("1", "one")
 	vstr := v.String()
 
-	expected := "ID: 1 - Parents: 0 - Children: 0 - Value: one\n"
+	expected := "ID: 1 - Parents: 0 - Children: 0 - Value: one"
 	if vstr != expected {
 		t.Fatalf("Vertex stringer expected to be %q but got %q\n", expected, vstr)
 	}
