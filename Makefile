@@ -57,6 +57,7 @@ benchmark:		## Execute package benchmarks
 # Dependencies
 
 deps:			## Install build dependencies
+	go get -u
 	go mod download
 	go mod verify
 
