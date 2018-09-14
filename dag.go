@@ -63,7 +63,7 @@ func (d *DAG) DeleteVertex(vertex *Vertex) error {
 			existsVertex = true
 		}
 	}
-	if existsVertex == false {
+	if !existsVertex {
 		return fmt.Errorf("Vertex with ID %v not found", vertex.ID)
 	}
 
@@ -89,10 +89,10 @@ func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
 			headExists = true
 		}
 	}
-	if tailExists == false {
+	if !tailExists {
 		return fmt.Errorf("Vertex with ID %v not found", tailVertex.ID)
 	}
-	if headExists == false {
+	if !headExists {
 		return fmt.Errorf("Vertex with ID %v not found", headVertex.ID)
 	}
 
@@ -170,7 +170,7 @@ func (d *DAG) Successors(vertex *Vertex) ([]*Vertex, error) {
 	var successors []*Vertex
 
 	_, found := d.Vertices.Get(vertex.ID)
-	if found != true {
+	if !found {
 		return successors, fmt.Errorf("vertex %s not found in the graph", vertex.ID)
 	}
 
@@ -186,7 +186,7 @@ func (d *DAG) Predecessors(vertex *Vertex) ([]*Vertex, error) {
 	var predecessors []*Vertex
 
 	_, found := d.Vertices.Get(vertex.ID)
-	if found != true {
+	if !found {
 		return predecessors, fmt.Errorf("vertex %s not found in the graph", vertex.ID)
 	}
 
@@ -200,13 +200,11 @@ func (d *DAG) Predecessors(vertex *Vertex) ([]*Vertex, error) {
 // String implements stringer interface and prints an string representation
 // of this instance.
 func (d *DAG) String() string {
-	var result string
-	result = fmt.Sprintf("DAG Vertices: %d - Edges: %d\n", d.Order(), d.Size())
-	result = result + fmt.Sprintf("Vertices:\n")
+	result := fmt.Sprintf("DAG Vertices: %d - Edges: %d\n", d.Order(), d.Size())
+	result += fmt.Sprintf("Vertices:\n")
 	for _, vertex := range d.Vertices.Values() {
 		vertex = vertex.(*Vertex)
-
-		result = result + fmt.Sprintf("%s", vertex)
+		result += fmt.Sprintf("%s", vertex)
 	}
 
 	return result
