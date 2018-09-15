@@ -24,13 +24,13 @@ import (
 	"github.com/goombaio/orderedmap"
 )
 
-// DAG type implements a Directed acyclic graph data structure.
+// DAG type implements a Directed Acyclic Graph data structure.
 type DAG struct {
 	mu       sync.Mutex
 	Vertices orderedmap.OrderedMap
 }
 
-// NewDAG creates a new directed acyclic graph instance.
+// NewDAG creates a new Directed Acyclic Graph instance.
 func NewDAG() *DAG {
 	d := &DAG{
 		Vertices: *orderedmap.NewOrderedMap(),
@@ -49,7 +49,7 @@ func (d *DAG) AddVertex(v *Vertex) error {
 	return nil
 }
 
-// DeleteVertex deletes a verrtex and all the edges referencing it from the
+// DeleteVertex deletes a vertex and all the edges referencing it from the
 // graph.
 func (d *DAG) DeleteVertex(vertex *Vertex) error {
 	existsVertex := false
@@ -57,7 +57,7 @@ func (d *DAG) DeleteVertex(vertex *Vertex) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 
-	// Check if vertexs exists.
+	// Check if vertices exists.
 	for _, v := range d.Vertices.Values() {
 		if v == vertex {
 			existsVertex = true
@@ -80,7 +80,7 @@ func (d *DAG) AddEdge(tailVertex *Vertex, headVertex *Vertex) error {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 
-	// Check if vertexs exists.
+	// Check if vertices exists.
 	for _, vertex := range d.Vertices.Values() {
 		if vertex == tailVertex {
 			tailExists = true
