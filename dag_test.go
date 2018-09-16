@@ -26,8 +26,8 @@ import (
 func TestDAG(t *testing.T) {
 	d := dag.NewDAG()
 
-	if d.Vertices.Size() != 0 {
-		t.Fatalf("DAG number of vertices expected to be 0 but got %d", d.Vertices.Size())
+	if d.Order() != 0 {
+		t.Fatalf("DAG number of vertices expected to be 0 but got %d", d.Order())
 	}
 }
 
@@ -41,8 +41,8 @@ func TestDAG_AddVertex(t *testing.T) {
 		t.Fatalf("Can't add vertex to DAG: %s", err)
 	}
 
-	if dag1.Vertices.Size() != 1 {
-		t.Fatalf("DAG number of vertices expected to be 1 but got %d", dag1.Vertices.Size())
+	if dag1.Order() != 1 {
+		t.Fatalf("DAG number of vertices expected to be 1 but got %d", dag1.Order())
 	}
 }
 
@@ -56,8 +56,8 @@ func TestDAG_DeleteVertex(t *testing.T) {
 		t.Fatalf("Can't add vertex to DAG")
 	}
 
-	if dag1.Vertices.Size() != 1 {
-		t.Fatalf("DAG number of vertices expected to be 1 but got %d", dag1.Vertices.Size())
+	if dag1.Order() != 1 {
+		t.Fatalf("DAG number of vertices expected to be 1 but got %d", dag1.Order())
 	}
 
 	err = dag1.DeleteVertex(vertex1)
@@ -65,8 +65,8 @@ func TestDAG_DeleteVertex(t *testing.T) {
 		t.Fatalf("Can't delete vertex from DAG: %s", err)
 	}
 
-	if dag1.Vertices.Size() != 0 {
-		t.Fatalf("DAG number of vertices expected to be 0 but got %d", dag1.Vertices.Size())
+	if dag1.Order() != 0 {
+		t.Fatalf("DAG number of vertices expected to be 0 but got %d", dag1.Order())
 	}
 
 	err = dag1.DeleteVertex(vertex1)
@@ -182,6 +182,34 @@ func TestDAG_DeleteEdge(t *testing.T) {
 	size = dag1.Size()
 	if size != 0 {
 		t.Fatalf("Dag expected to have 0 edges but got %d", size)
+	}
+}
+
+func TestDAG_GetVertex(t *testing.T) {
+	dag1 := dag.NewDAG()
+
+	vertex1 := dag.NewVertex("1", "one")
+	vertex2 := dag.NewVertex("2", 2)
+
+	err := dag1.AddVertex(vertex1)
+	if err != nil {
+		t.Fatalf("Can't add vertex1 to DAG: %s", err)
+	}
+	err = dag1.AddVertex(vertex2)
+	if err != nil {
+		t.Fatalf("Can't add vertex2 to DAG: %s", err)
+	}
+
+	v1, _ := dag1.GetVertex("1")
+	v2, _ := dag1.GetVertex("2")
+
+	expected1 := "one"
+	expected2 := 2
+	if v1.Value != expected1 {
+		t.Fatalf("Expected value1 to be %q but got %v.", expected1, v1.Value)
+	}
+	if v1.Value != expected1 {
+		t.Fatalf("Expected value2 to be %q but got %v.", expected2, v2.Value)
 	}
 }
 
