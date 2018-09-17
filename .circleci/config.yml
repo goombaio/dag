@@ -25,6 +25,7 @@ jobs:
       - run: make deps
       - run: make dev-deps
       - run: make test
+      - run: make test-race
       - run: make cover-profile
       - run: bash <(curl -s https://codecov.io/bash)
 
