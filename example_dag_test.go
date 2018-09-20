@@ -24,7 +24,6 @@ import (
 )
 
 func ExampleDAG_vertices() {
-
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)
@@ -64,7 +63,6 @@ func ExampleDAG_vertices() {
 }
 
 func ExampleDAG_edges() {
-
 	dag1 := dag.NewDAG()
 
 	vertex1 := dag.NewVertex("1", nil)

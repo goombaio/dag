@@ -30,7 +30,7 @@ type DAG struct {
 	vertices orderedmap.OrderedMap
 }
 
-// NewDAG creates a new Directed Acyclic Graph instance.
+// NewDAG creates a new Directed Acyclic Graph or DAG.
 func NewDAG() *DAG {
 	d := &DAG{
 		vertices: *orderedmap.NewOrderedMap(),
@@ -122,7 +122,7 @@ func (d *DAG) DeleteEdge(tailVertex *Vertex, headVertex *Vertex) error {
 	return nil
 }
 
-// Return a vertex from the graph given a vertex ID.
+// GetVertex return a vertex from the graph given a vertex ID.
 func (d *DAG) GetVertex(id interface{}) (*Vertex, error) {
 	var vertex *Vertex
 
@@ -211,8 +211,9 @@ func (d *DAG) Predecessors(vertex *Vertex) ([]*Vertex, error) {
 	return predecessors, nil
 }
 
-// String implements stringer interface and prints an string representation
-// of this instance.
+// String implements stringer interface.
+//
+// Prints an string representation of this instance.
 func (d *DAG) String() string {
 	result := fmt.Sprintf("DAG Vertices: %d - Edges: %d\n", d.Order(), d.Size())
 	result += fmt.Sprintf("Vertices:\n")

@@ -23,7 +23,7 @@ import (
 	"github.com/goombaio/orderedset"
 )
 
-// Vertex ...
+// Vertex type implements a vertex of a Directed Acyclic graph or DAG.
 type Vertex struct {
 	ID       string
 	Value    interface{}
@@ -31,7 +31,7 @@ type Vertex struct {
 	Children *orderedset.OrderedSet
 }
 
-// NewVertex ...
+// NewVertex creates a new vertex.
 func NewVertex(id string, value interface{}) *Vertex {
 	v := &Vertex{
 		ID:       id,

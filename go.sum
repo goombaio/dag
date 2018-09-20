@@ -1,4 +1,6 @@
-github.com/goombaio/orderedmap v0.0.0-20180914223936-0f08a0ff7177 h1:ir16lv3x1rtOU6LKoyoBzI3Mch91vlHOlSJIh75ZERU=
-github.com/goombaio/orderedmap v0.0.0-20180914223936-0f08a0ff7177/go.mod h1:YKu81H3RSd1cFh0d7NhvUoTtUC9IY/vBX0WUQb1/o4Y=
-github.com/goombaio/orderedset v0.0.0-20180914224700-b7aeb2c119e3 h1:Qs8WhlmQVaFSZxiPl9QXoK24ghnDYNPuJJx3PvueoAY=
-github.com/goombaio/orderedset v0.0.0-20180914224700-b7aeb2c119e3/go.mod h1:mABw6LHASk7y0G0Ep5+3gGHkVbuqokP7TlytYRtj5aQ=
+github.com/goombaio/orderedmap v0.0.0-20180919220005-74a8ebf02da1 h1:e/NF/RjTEmPBO74u1DU5IHcbEaB8F0W+2cWvsAE5d3k=
+github.com/goombaio/orderedmap v0.0.0-20180919220005-74a8ebf02da1/go.mod h1:YKu81H3RSd1cFh0d7NhvUoTtUC9IY/vBX0WUQb1/o4Y=
+github.com/goombaio/orderedmap v0.0.0-20180919235155-bc5581d0235c h1:bgCr71mVazVdPGGIH+uhgNME8oyjgO0VpGDAvrOVgNw=
+github.com/goombaio/orderedmap v0.0.0-20180919235155-bc5581d0235c/go.mod h1:YKu81H3RSd1cFh0d7NhvUoTtUC9IY/vBX0WUQb1/o4Y=
+github.com/goombaio/orderedset v0.0.0-20180919235125-9a5bd003fc08 h1:kHzMLK3LlrTRwrVeWzPekB/zCz+W4vX+T2wzehWIxK4=
+github.com/goombaio/orderedset v0.0.0-20180919235125-9a5bd003fc08/go.mod h1:WFT08kQWYQzG0Qg79ZnoopUUZpqSD8Cg4MoQ3df7QCg=
