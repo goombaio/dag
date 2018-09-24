@@ -4,12 +4,15 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# gometalinter
+
 if [ ! $(command -v gometalinter) ]
 then
 	go get github.com/alecthomas/gometalinter
 	gometalinter --update --install
 fi
 
+echo "gometalinter:"
 time gometalinter \
 	--exclude='error return value not checked.*(Close|Log|Print).*\(errcheck\)$' \
 	--exclude='.*_test\.go:.*error return value not checked.*\(errcheck\)$' \
@@ -24,3 +27,17 @@ time gometalinter \
 	--concurrency=2 \
 	--deadline=300s \
 	./...
+echo 
+
+# golangci-lint
+
+if [ ! $(command -v golangci-lint) ]
+then
+	go get github.com/golangci/golangci-lint/cmd/golangci-lint
+fi
+
+
+echo "golangci-lint:"
+time golangci-lint \
+	run \
+	./... 
