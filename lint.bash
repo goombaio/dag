@@ -14,11 +14,10 @@ fi
 
 echo "gometalinter:"
 time gometalinter \
-	--exclude='error return value not checked.*(Close|Log|Print).*\(errcheck\)$' \
-	--exclude='.*_test\.go:.*error return value not checked.*\(errcheck\)$' \
 	--exclude='/thrift/' \
 	--exclude='/pb/' \
 	--exclude='no args in Log call \(vet\)' \
+	--disable=errcheck \
 	--disable=dupl \
 	--disable=aligncheck \
 	--disable=gotype \
@@ -40,4 +39,5 @@ fi
 echo "golangci-lint:"
 time golangci-lint \
 	run \
+	--disable errcheck \
 	./... 
